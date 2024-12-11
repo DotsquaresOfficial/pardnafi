@@ -17,7 +17,7 @@ class AuthManager {
     }
 
     login(req, res, next) {
-        _this._passport.authenticate('local-auth', function (err, user, info) {
+          _this._passport.authenticate('local-auth', function (err, user, info) {
             const error = err || info;
             if (error) {
                 console.log(error, "error");

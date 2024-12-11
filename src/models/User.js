@@ -31,19 +31,7 @@ let UserSchema = new Schema({
     address: { type: String, default: "" },
     phoneNumber: { type: Number, default: null },
     designation: { type: String, default: "" },
-    departmentName: { type: String, default: "" },
-    Notification: [
-        {
-            isRead: { type: Boolean, default: false },
-            notificationId: { type: Schema.Types.ObjectId, ref: "Notification" },
-            _id: false
-        }
-    ],
-    nfts: [
-        {
-            nftId: { type: mongoose.Schema.Types.ObjectId, ref: 'Nft' },
-        },
-    ],
+    departmentName: { type: String, default: "" }
 }, { timestamps: true });
 
 UserSchema.methods.toJSON = function () {
@@ -89,8 +77,6 @@ module.exports.UserModel = mongoose.model('User', UserSchema);
 
 module.exports.ROLES = {
     ADMIN: 'admin',
-    USER: 'user',
-    GOVERMENT: 'goverment'
-
+    USER: 'user'
 };
 
