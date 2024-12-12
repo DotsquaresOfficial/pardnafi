@@ -71,9 +71,9 @@ class AuthController {
         UserModel.findOne({ email: new RegExp(["^", req.body.email, "$"].join(""), "i") }, function (err, user) {
           if (!user) {
             logger.error(`This email is not registered`);
-            return res.send({
+            return res.status(401).send({
               message: 'This email is not registered',
-              status: 404,
+              status: 401,
               success:false,
               data: {}
             });
