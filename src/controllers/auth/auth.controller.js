@@ -74,6 +74,7 @@ class AuthController {
             return res.send({
               message: 'This email is not registered',
               status: 404,
+              success:false,
               data: {}
             });
           }

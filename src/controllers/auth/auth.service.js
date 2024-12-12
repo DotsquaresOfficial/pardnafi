@@ -27,7 +27,7 @@ class AuthManager {
                 return res.status(401).json({ message: "invalid credentials", status: 401, success: false })
             }
             if (user.blocked === true) {
-                return ResponseManager.respondWithError({ data: { res }, status: 200, message: "Your account is blocked." });
+                return ResponseManager.respondWithError({ data: { res }, status: 400, message: "Your account is blocked." });
             }
             const token = _this.signToken({ _id: user._id, email: user.email, role: user.role });
             return res.json({
