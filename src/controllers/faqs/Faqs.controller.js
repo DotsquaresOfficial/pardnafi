@@ -28,7 +28,7 @@ class FaqsController {
         try {
             const Faqs = await FaqsModel.find({}, { "question": 1, "answer": 1 });
             if (!Faqs) { return res.send({ message: "FAQs not found", status: 401, success: false }) }
-            return res.send({ message: "FAQs fetch successfully", status: 201, success: true, Faqs });
+            return res.send({ message: "FAQs fetch successfully", status: 201, success: true,data: Faqs });
         } catch (error) {
             console.log(error, "error");
         }
