@@ -21,10 +21,10 @@ class AuthManager {
             const error = err || info;
             if (error) {
                 console.log(error, "error");
-                return res.status(400).json({success:false,status:400, message: "invalid credentials" })
+                return res.status(401).json({success:false,status:401, message: "invalid credentials" })
             }
             if (!user) {
-                return res.status(400).json({ message: "invalid credentials", status: 401, success: false })
+                return res.status(401).json({ message: "invalid credentials", status: 401, success: false })
             }
             if (user.blocked === true) {
                 return ResponseManager.respondWithError({ data: { res }, status: 200, message: "Your account is blocked." });
