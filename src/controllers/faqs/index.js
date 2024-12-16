@@ -11,6 +11,7 @@ router.get('/get-faqs', AuthManager.isAuthenticated, AuthManager.isAdmin, FaqsCo
 router.post('/update-faqs', AuthManager.isAuthenticated, AuthManager.isAdmin, FaqsController.updatefaqs);
 router.post('/remove-faqs', AuthManager.isAuthenticated, AuthManager.isAdmin, validate(pageValidation.RemoveFaqs), FaqsController.removefaqs);
 router.get('/get-one', AuthManager.isAuthenticated, AuthManager.isAdmin, FaqsController.getOne);
+router.get('/query-faqs', AuthManager.isAuthenticated, AuthManager.isAdmin, FaqsController.getFaqsByQuery);
 
 /*--------------user api Routes---------------------------*/
 router.get('/get-faqs-user', FaqsController.getAllFaqsUser);

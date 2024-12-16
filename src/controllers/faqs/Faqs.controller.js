@@ -94,6 +94,56 @@ class FaqsController {
         }
     }
 
+
+    static async getFaqsByQuery(req, res, next) {
+        try {
+            // Check if the 'query' parameter is provided in the request
+            if (!req.query.query) {
+                return res.status(400).send({ 
+                    message: "Query is required", 
+                    status: 400, 
+                    success: false 
+                });
+            }
+    
+            const searchQuery = req.query.query;
+    
+            // Perform case-insensitive search using $regex
+            const faqs = await FaqsModel.find({
+                $or: [
+                    { question: { $regex: searchQuery, $options: "i" } },
+                    { answer: { $regex: searchQuery, $options: "i" } },
+                ]
+            });
+    
+            // Check if any FAQs are found
+            if (!faqs || faqs.length === 0) {
+                return res.status(404).send({ 
+                    message: "No FAQs found matching the query", 
+                    status: 404, 
+                    success: false 
+                });
+            }
+    
+            // Return the found FAQs
+            return res.status(200).send({ 
+                message: "FAQs found successfully", 
+                status: 200, 
+                success: true, 
+                faqs 
+            });
+    
+        } catch (error) {
+            console.error(error, "error");
+            return res.status(500).send({
+                message: "An error occurred", 
+                status: 500, 
+                success: false
+            });
+        }
+    }
+    
+
     /* ---------------------------------User Api---------------------------- */
     static async getAllFaqsUser(req, res, next) {
         try {
