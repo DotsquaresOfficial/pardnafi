@@ -66,7 +66,7 @@ class FaqsController {
                     if (err) {
                         return res.send({ message: "An error was envountred", status: 401, success: false });
                     } else {
-                        return res.send({ message: "FAQ deleted successfully", status: 200, success: true, remove });
+                        return res.send({ message: "FAQ deleted successfully", status: 200, success: true,data: remove });
                     }
 
                 })
@@ -84,7 +84,7 @@ class FaqsController {
             const faqs = await FaqsModel.findOne({ _id: req.query.id }, { "question": 1, "answer": 1 });
             if (!faqs) { return res.send({ message: "FAQ not found", status: 401, success: false }) }
 
-            return res.send({ message: "FAQ found succssfully", status: 201, success: true, faqs })
+            return res.send({ message: "FAQ found succssfully", status: 201, success: true,data: faqs })
 
         } catch (error) {
             console.log(error, "error");
@@ -130,7 +130,7 @@ class FaqsController {
                 message: "FAQs found successfully", 
                 status: 200, 
                 success: true, 
-                faqs 
+                data: faqs 
             });
     
         } catch (error) {
@@ -149,7 +149,7 @@ class FaqsController {
         try {
             const Faqs = await FaqsModel.find({}, { "question": 1, "answer": 1 });
             if (!Faqs) { return res.send({ message: "FAQs are not found", status: 401, success: false }) }
-            return res.send({ message: "FAQs are fetched successfully", status: 200, success: true, Faqs });
+            return res.send({ message: "FAQs are fetched successfully", status: 200, success: true,data: Faqs });
         } catch (error) {
             console.log(error, "error");
             return res.send({ message: 'An error encountred', status: 500, success: false })
