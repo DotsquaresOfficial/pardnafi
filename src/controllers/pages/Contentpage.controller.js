@@ -3,22 +3,24 @@ const PageModel = require('../../models/Pages').PagesModel;
 const HeDecode = require('he');
 class PagesController {
     static async createPageContent(req, res, next) {
-        try {
-            let reqBody = req.body;
+        // try {
+        //     let reqBody = req.body;
 
-            const page = await PageModel.create({
-                slug: reqBody.slug,
-                title: reqBody.title,
-                subTitle: reqBody.subTitle,
-                description: reqBody.description,
-            });
+        //     const page = await PageModel.create({
+        //         slug: reqBody.slug,
+        //         title: reqBody.title,
+        //         subTitle: reqBody.subTitle,
+        //         description: reqBody.description,
+        //     });
 
-            if (!page) { return res.send({ message: "Somthing went wrong Page is not created", status: 200, success: false }) };
-            return res.send({ message: "Page is created successfully", status: 200, success: true })
+        //     if (!page) { return res.send({ message: "Somthing went wrong Page is not created", status: 200, success: false }) };
+        //     return res.send({ message: "Page is created successfully", status: 200, success: true })
 
-        } catch (error) {
-            console.log(error, "error");
-        }
+        // } catch (error) {
+        //     console.log(error, "error");
+        // }
+
+        return res.send({});
 
     }
 
@@ -45,7 +47,7 @@ class PagesController {
     static async updateContent(req, res, next) {
         try {
             let reqbody = req.body;
-            const update = await PageModel.findOne({ slug: reqbody.slug, _id: reqbody.id, isDeleted: false, isActive: true });
+            const update = await PageModel.findOne({ slug: reqbody.slug, isDeleted: false, isActive: true });
             if (!update) { return res.send({ message: "Page is not found for updation", success: false, status: 404 }) }
             update.slug = reqbody.slug ? reqbody.slug : update.slug;
             update.title = reqbody.title ? reqbody.title : update.title;
@@ -56,7 +58,9 @@ class PagesController {
 
 
         } catch (error) {
+            console.log(error, "error");
 
+            return res.status(400).send({ message: "An error has been encountered", status: 400, success: false })
         }
     }
 
