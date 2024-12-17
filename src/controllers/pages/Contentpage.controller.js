@@ -104,7 +104,7 @@ class PagesController {
 
     static async aboutUs(req, res, next) {
         try {
-            const about = await PageModel.findOne({ slug: "About us", isDeleted: false, isActive: true }, { "slug": 1, "title": 1, "subTitle": 1, "description": 1, "isActive": 1 });
+            const about = await PageModel.findOne({ slug: "about_us", isDeleted: false, isActive: true }, { "slug": 1, "title": 1, "subTitle": 1, "description": 1, "isActive": 1 });
             if (!about) { return res.send({ message: "Page not found", status: 401, success: false }) }
 
             about.title = about ? HeDecode.decode(about.title) : "";
@@ -120,7 +120,7 @@ class PagesController {
 
     static async privacyPolicy(req, res, next) {
         try {
-            const privacy = await PageModel.findOne({ slug: "privacypolicy", isDeleted: false, isActive: true }, { "slug": 1, "title": 1, "subTitle": 1, "description": 1, "isActive": 1 })
+            const privacy = await PageModel.findOne({ slug: "privacy_policy", isDeleted: false, isActive: true }, { "slug": 1, "title": 1, "subTitle": 1, "description": 1, "isActive": 1 })
 
             if (!privacy) { return res.send({ message: "Privacy Policy page not found", status: 401, success: false }) }
 
@@ -138,7 +138,7 @@ class PagesController {
 
     static async termAndCondition(req, res, next) {
         try {
-            const termCondition = await PageModel.findOne({ slug: "term&condition", isDeleted: false, isActive: true }, { "slug": 1, "title": 1, "subTitle": 1, "description": 1, "isActive": 1 })
+            const termCondition = await PageModel.findOne({ slug: "term_&_condition", isDeleted: false, isActive: true }, { "slug": 1, "title": 1, "subTitle": 1, "description": 1, "isActive": 1 })
 
             if (!termCondition) { return res.send({ message: "Term and condition page not found", status: 401, success: false }) }
 
@@ -146,7 +146,7 @@ class PagesController {
             termCondition.subTitle = termCondition ? HeDecode.decode(termCondition.subTitle) : "";
             termCondition.description = termCondition ? HeDecode.decode(termCondition.description) : "";
 
-            return res.send({ message: "Term and condition fetched successfully", status: 200, success: true, termCondition });
+            return res.send({ message: "Term and condition fetched successfully", status: 200, success: true,data: termCondition });
 
         } catch (error) {
             console.log(error, "error");
