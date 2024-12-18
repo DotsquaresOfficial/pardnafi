@@ -53,7 +53,7 @@ class UploadFileController {
         throw new ApiError(httpStatus.BAD_REQUEST, "Invalid file type");
       }
       if (err) {
-        throw new Error("An Error occurred while uploading");
+       return    res.json({ "error": err });
       }
       let uploadedFile = req.file;
       delete uploadedFile.destination;
@@ -61,7 +61,7 @@ class UploadFileController {
       delete uploadedFile.fieldname;
       delete uploadedFile.path;
       
-      uploadedFile["url"] = process.env.SITE_URL + "/images/" + uploadedFile.filename;
+      uploadedFile["url"] = 'https://pardnafi.24livehost.com' + "/images/" + uploadedFile.filename;
       return res.json({ file: uploadedFile });
     });
 
