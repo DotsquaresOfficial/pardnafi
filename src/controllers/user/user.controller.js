@@ -207,7 +207,7 @@ class UserController {
 
     static async userUpdateDetails(req, res) {
         try {
-            const userDetails = await UserModal.findOne({ walletAddress: req.body.walletAddress });
+            const userDetails = await UserModal.findOne({ _id: req.body.id });
             if (!userDetails) {
                 return res.send({ message: "User not found", status: 404, success: false });
             }
@@ -322,37 +322,37 @@ class UserController {
             role: "user"
         });
 
-        console.log(newuser, 'newuser')
-        let html = `<!DOCTYPE html>
-                        <html>
-                            <head>
-                            </head>
-                            <body style="font-family: Arial; font-size: 12px;">
-                                <div>
-                                    <p> Hi ` + newuser.firstName + ` ` + newuser.lastName + `,</p>
-                                    <p>
-                                    We are excited to inform you that your account has been created on the Digitial Platform website! You can log in to your account using the details below:
-                                    </p>
-                                    <p>
-                                    <strong>Email:</strong> ` + newuser.email + `<br/>
-                                    <strong>Password:</strong> ` + reqbody.password + `
-                                    </p>
-                                    <p>
-                                    For security reasons, please reset your password immediately after logging in to protect your account.
-                                    </p>
-                                    <p>
-                                    If you did not request this account, please contact our support team.
-                                    </p>
-                                    <p>Best Wishes, <br/>Carnft Team</p>
-                                </div>
-                            </body>
-                        </html>`;
+        // console.log(newuser, 'newuser')
+        // let html = `<!DOCTYPE html>
+        //                 <html>
+        //                     <head>
+        //                     </head>
+        //                     <body style="font-family: Arial; font-size: 12px;">
+        //                         <div>
+        //                             <p> Hi ` + newuser.firstName + ` ` + newuser.lastName + `,</p>
+        //                             <p>
+        //                             We are excited to inform you that your account has been created on the Digitial Platform website! You can log in to your account using the details below:
+        //                             </p>
+        //                             <p>
+        //                             <strong>Email:</strong> ` + newuser.email + `<br/>
+        //                             <strong>Password:</strong> ` + reqbody.password + `
+        //                             </p>
+        //                             <p>
+        //                             For security reasons, please reset your password immediately after logging in to protect your account.
+        //                             </p>
+        //                             <p>
+        //                             If you did not request this account, please contact our support team.
+        //                             </p>
+        //                             <p>Best Wishes, <br/>Carnft Team</p>
+        //                         </div>
+        //                     </body>
+        //                 </html>`;
 
-        Mailer.sendMail(newuser.email, 'Your New Digitial Platform Account', html, function (err, info) {
-            console.log(err, 'err')
-            console.log(info, 'info')
-            done(err, 'done');
-        });
+        // Mailer.sendMail(newuser.email, 'Your New Digitial Platform Account', html, function (err, info) {
+        //     console.log(err, 'err')
+        //     console.log(info, 'info')
+        //     done(err, 'done');
+        // });
 
 
         return res.send({ message: "User account has been Created succssfully", status: 201, success: true })
