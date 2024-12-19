@@ -10,7 +10,7 @@ router.get('/get-email', AuthManager.isAuthenticated, AuthManager.isAdmin, Conta
 router.post('/update-email', AuthManager.isAuthenticated, AuthManager.isAdmin, ContactUsController.updateEmail);
 router.get('/remove-email', AuthManager.isAuthenticated, AuthManager.isAdmin, ContactUsController.removeEmail);
 
-
+router.get('/query-contact-us', AuthManager.isAuthenticated, AuthManager.isAdmin, ContactUsController.getContactUsByQuery);
 
 
 module.exports = router;
