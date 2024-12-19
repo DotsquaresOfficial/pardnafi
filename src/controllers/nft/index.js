@@ -8,7 +8,7 @@ const NftController = require('../nft/nft-controller')
 
 
 
-router.post('/create-nft', AuthManager.isAuthenticated, AuthManager.isUser, NftController.CreateNft);
+router.post('/create-nft', NftController.CreateNft);
 
 
 

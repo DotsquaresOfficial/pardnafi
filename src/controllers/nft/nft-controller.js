@@ -9,72 +9,10 @@ class NftController {
     //user
     static async CreateNft(req, res) {
         const data = req.body;
-
-        if (!data.token || typeof data.token !== "string") {
-            return res.status(400).json({ error: "Invalid or missing 'token'" });
-        }
-        if (!data.vehicleImage || typeof data.vehicleImage !== "string") {
-            return res.status(400).json({ error: "Invalid or missing 'vehicleImage'" });
-        }
-        if (!data.vehicleName || typeof data.vehicleName !== "string") {
-            return res.status(400).json({ error: "Invalid or missing 'vehicleName'" });
-        }
-        if (!data.vehicleDescription || typeof data.vehicleDescription !== "string") {
-            return res.status(400).json({ error: "Invalid or missing 'vehicleDescription'" });
-        }
-
-        if (!data.ownerName || typeof data.ownerName !== "string") {
-            return res.status(400).json({ error: "Invalid or missing 'ownerName'" });
-        }
-        if (!data.ownerImage || typeof data.ownerImage !== "string") {
-            return res.status(400).json({ error: "Invalid or missing 'ownerImage'" });
-        }
-        if (!data.ownerAddress || typeof data.ownerAddress !== "string") {
-            return res.status(400).json({ error: "Invalid or missing 'ownerAddress'" });
-        }
-        const { vehicleRequiredDocuments, ownerRequiredDocuments } = data;
-
-        if (vehicleRequiredDocuments && Array.isArray(vehicleRequiredDocuments)) {
-            for (const doc of vehicleRequiredDocuments) {
-                if (
-                    !doc.imageName || typeof doc.imageName !== "string" ||
-                    !doc.imageUrl || typeof doc.imageUrl !== "string"
-                ) {
-                    return res.status(400).json({ error: "Invalid 'vehicleRequiredDocuments' item" });
-                }
-            }
-        } else {
-            return res.status(400).json({ error: "Invalid or missing 'vehicleRequiredDocuments'" });
-        }
-
-        if (ownerRequiredDocuments && Array.isArray(ownerRequiredDocuments)) {
-
-            for (const doc of ownerRequiredDocuments) {
-                if (
-                    !doc.imageName || typeof doc.imageName !== "string" ||
-                    !doc.imageUrl || typeof doc.imageUrl !== "string"
-                ) {
-                    return res.status(400).json({ error: "Invalid 'ownerRequiredDocuments' item" });
-                }
-            }
-        } else {
-            return res.status(400).json({ error: "Invalid or missing 'ownerRequiredDocuments'" });
-        }
-
+        console.log(data);
         try {
             const nftData = new NftModal(data);
             const savedData = await nftData.save();
-
-            const user = await UserModal.findOneAndUpdate(
-                { _id: req.user._id },
-                { $push: { nfts: { nftId: savedData._id } } },
-                { new: true }
-            );
-
-            if (!user) {
-                return res.status(404).json({ message: "User not found", success: false });
-            }
-
             return res.status(201).json({ message: "Data saved successfully", data: savedData });
         } catch (error) {
             console.error("Error saving data:", error);
