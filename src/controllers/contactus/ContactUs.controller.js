@@ -33,6 +33,58 @@ class ContactUsController {
             console.log(error, "error");
         }
     }
+
+ 
+    static async getContactUsByQuery(req, res, next) {
+        try {
+            // Check if the 'query' parameter is provided in the request
+            if (!req.query.query) {
+                return res.status(400).send({ 
+                    message: "Query is required", 
+                    status: 400, 
+                    success: false 
+                });
+            }
+    
+            const searchQuery = req.query.query;
+    
+            // Perform case-insensitive search using $regex
+            const users = await ContactUsModel.find({
+                $or: [
+                 
+                    { Name: { $regex: searchQuery, $options: "i" } },
+                    { email: { $regex: searchQuery, $options: "i" } },
+                ]
+            });
+    
+            // Check if any FAQs are found
+            if (!users || users.length === 0) {
+                return res.status(404).send({ 
+                    message: "No Query found matching the query", 
+                    status: 404, 
+                    success: false 
+                });
+            }
+    
+            // Return the found FAQs
+            return res.status(200).send({ 
+                message: "Query was found successfully", 
+                status: 200, 
+                success: true, 
+                data: users 
+            });
+    
+        } catch (error) {
+            console.error(error, "error");
+            return res.status(500).send({
+                message: `An error occurred ${error}`, 
+                status: 500, 
+                success: false
+            });
+        }
+    }
+    
+
     static dateTimeFormat() {
         const currentTimestamp = Date.now();
 

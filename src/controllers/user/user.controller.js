@@ -275,8 +275,8 @@ class UserController {
                 return res.send({ message: "User not found", status: 404, success: false });
             }
 
-            userDetails.firstName = req.body.fname ? req.body.fname : userDetails.firstName;
-            userDetails.lastName = req.body.fname ? req.body.fname : userDetails.lastName;
+            userDetails.firstName = req.body.firstName ? req.body.firstName : userDetails.firstName;
+            userDetails.lastName = req.body.lastName ? req.body.lastName : userDetails.lastName;
             userDetails.address = req.body.address ? req.body.address : userDetails.address;
             userDetails.phoneNumber = req.body.phoneNumber ? req.body.phoneNumber : userDetails.phoneNumber;
             userDetails.avatar = req.body.avatar ? req.body.avatar : userDetails.avatar;
