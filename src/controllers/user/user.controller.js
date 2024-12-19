@@ -298,7 +298,7 @@ class UserController {
                 return res.send({ message: "User not found", status: 404, success: false });
             }
 
-            userDetails.isActive = req.body.state?true:false;
+            userDetails.isActive = req.body.status?true:false;
 
             await userDetails.save();
             if (!userDetails) {
