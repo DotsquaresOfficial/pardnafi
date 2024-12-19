@@ -25,8 +25,7 @@ router.get('/get-user', UserController.getUsers);
 
 // ********************User API*******************************
 
-router.post('/activateUser', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.activateAccount);
-router.post('/deactivateUser', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.deActivateAccount);
+router.post('/update-user-state', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.updateState);
 
 router.get('/get-user-by-id', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.getUserById);
 

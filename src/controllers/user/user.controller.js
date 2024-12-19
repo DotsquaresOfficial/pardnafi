@@ -291,14 +291,14 @@ class UserController {
         }
     }
 
-    static async activateAccount(req, res) {
+    static async updateState(req, res) {
         try {
             const userDetails = await UserModal.findOne({ _id: req.body.id });
             if (!userDetails) {
                 return res.send({ message: "User not found", status: 404, success: false });
             }
 
-            userDetails.isActive = true;
+            userDetails.isActive = req.body.state?true:false;
 
             await userDetails.save();
             if (!userDetails) {
