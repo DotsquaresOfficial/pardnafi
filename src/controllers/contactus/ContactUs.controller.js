@@ -8,16 +8,14 @@ class ContactUsController {
         try {
             if (
                 req.body.name == "" ||
-                req.body.companyName == "" ||
                 req.body.email == "" ||
-                req.body.jobTitle == "" ||
                 req.body.contactNumber == "" ||
                 req.body.message == ""
             ) { return res.send({ message: "All fields are required", success: false }) }
-            const admin = await UserModel.findOne({ role: ROLES.ADMIN }, { "firstName": 1, "lastName": 1, "email": 1 });
-            if (!admin) {
-                return res.send({ message: "Admin details not found for email", status: 200, success: false });
-            }
+            // const admin = await UserModel.findOne({ role: ROLES.ADMIN }, { "firstName": 1, "lastName": 1, "email": 1 });
+            // if (!admin) {
+            //     return res.send({ message: "Admin details not found for email", status: 200, success: false });
+            // }
             const ticket = await ContactUsModel.create({
                 Name: req.body.name,
                 Company: req.body.companyName,
@@ -28,9 +26,9 @@ class ContactUsController {
             });
 
             if (!ticket) return res.send({ message: "Somthing went wrong contact form not submitted", sucess: false })
-            ContactUsController.emailToAdmin(admin, ticket);
-            ContactUsController.emailToCustomer(admin, ticket);
-            return res.send({ message: "Form submited successfully" });
+            // ContactUsController.emailToAdmin(admin, ticket);
+            // ContactUsController.emailToCustomer(admin, ticket);
+            return res.send({ status: 200, success: true ,message: "Form submited successfully" });
         } catch (error) {
             console.log(error, "error");
         }
@@ -159,9 +157,9 @@ class ContactUsController {
                 return res.send({ message: "No such record", status: 404, success: false });
             }
             if (tickets.lenght === 0) {
-                return res.send({ message: "All Emails resolved ", status: 200, success: true, tickets });
+                return res.send({ message: "All Tickets resolved ", status: 200, success: true, tickets });
             }
-            return res.send({ message: "Emails fetched successfully", status: 200, success: true, tickets });
+            return res.send({ message: "Tickets fetched successfully", status: 200, success: true, tickets });
 
         } catch (error) {
             console.log(error, "error");

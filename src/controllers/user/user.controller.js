@@ -180,24 +180,85 @@ class UserController {
             if (!req.user || !req.user._id) {
                 return res.send({ message: "Unauthorize", success: false, status: 401 });
             }
-            const users = await UserModal.find({ role: ROLES.USER }, {
-                "email": 1,
-                "userId": 1,
-                "avatar": 1,
-                "uplineId": 1,
-                "firstName": 1,
-                "lastName": 1,
-                "isActive": 1,
-                "isJoined": 1,
-                "isDeleted": 1,
-                "dataOfjoining": 1,
-            });
+            const users = await UserModal.find({ role: ROLES.USER });
 
             if (!users) {
                 return res.send({ message: "Users are not found", status: 401, success: false, });
             }
 
-            return res.send({ message: "Users are fetched successfully", status: 201, success: true, users });
+            return res.send({ message: "Users are fetched successfully", status: 200, success: true,  users });
+
+        } catch (error) {
+            console.log(error, "error");
+            return res.send({ message: "An error encountred", status: 500, success: false });
+        }
+    }
+
+    static async getUserByQuery(req, res, next) {
+        try {
+            // Check if the 'query' parameter is provided in the request
+            if (!req.query.query) {
+                return res.status(400).send({ 
+                    message: "Query is required", 
+                    status: 400, 
+                    success: false 
+                });
+            }
+    
+            const searchQuery = req.query.query;
+    
+            // Perform case-insensitive search using $regex
+            const users = await UserModal.find({
+                $or: [
+                 
+                    { firstName: { $regex: searchQuery, $options: "i" } },
+                    { lastName: { $regex: searchQuery, $options: "i" } },
+                    { email: { $regex: searchQuery, $options: "i" } },
+                    { walletAddress: { $regex: searchQuery, $options: "i" } },
+                    { address: { $regex: searchQuery, $options: "i" } },
+                ]
+            });
+    
+            // Check if any FAQs are found
+            if (!users || users.length === 0) {
+                return res.status(404).send({ 
+                    message: "No Users found matching the query", 
+                    status: 404, 
+                    success: false 
+                });
+            }
+    
+            // Return the found FAQs
+            return res.status(200).send({ 
+                message: "Users found successfully", 
+                status: 200, 
+                success: true, 
+                data: users 
+            });
+    
+        } catch (error) {
+            console.error(error, "error");
+            return res.status(500).send({
+                message: `An error occurred ${error}`, 
+                status: 500, 
+                success: false
+            });
+        }
+    }
+    
+
+    static async getUserById(req, res) {
+        try {
+            if (!req.user || !req.user._id) {
+                return res.send({ message: "Unauthorize", success: false, status: 401 });
+            }
+            const users = await UserModal.findOne({ role: ROLES.USER ,_id:req.body.id});
+
+            if (!users) {
+                return res.send({ message: "Users are not found", status: 401, success: false, });
+            }
+
+            return res.send({ message: "Users are fetched successfully", status: 200, success: true,  data:users });
 
         } catch (error) {
             console.log(error, "error");
@@ -217,6 +278,44 @@ class UserController {
             userDetails.address = req.body.address ? req.body.address : userDetails.address;
             userDetails.phoneNumber = req.body.phoneNumber ? req.body.phoneNumber : userDetails.phoneNumber;
             userDetails.avatar = req.body.avatar ? req.body.avatar : userDetails.avatar;
+
+            await userDetails.save();
+            if (!userDetails) {
+                return res.send({ message: "Profile details has not been updated", status: 401, success: false });
+            }
+            return res.status(200).json({ message: "Profile details has been updated successfully", status: 201, success: true, userDetails });
+        } catch (error) {
+            console.log(error, "error   ");
+        }
+    }
+
+    static async activateAccount(req, res) {
+        try {
+            const userDetails = await UserModal.findOne({ _id: req.body.id });
+            if (!userDetails) {
+                return res.send({ message: "User not found", status: 404, success: false });
+            }
+
+            userDetails.isActive = true;
+
+            await userDetails.save();
+            if (!userDetails) {
+                return res.send({ message: "Profile details has not been updated", status: 401, success: false });
+            }
+            return res.status(200).json({ message: "Profile details has been updated successfully", status: 201, success: true, userDetails });
+        } catch (error) {
+            console.log(error, "error   ");
+        }
+    }
+
+    static async deActivateAccount(req, res) {
+        try {
+            const userDetails = await UserModal.findOne({ _id: req.body.id });
+            if (!userDetails) {
+                return res.send({ message: "User not found", status: 404, success: false });
+            }
+
+            userDetails.isActive = false;
 
             await userDetails.save();
             if (!userDetails) {

@@ -15,7 +15,7 @@ router.get('/get-user-detail', AuthManager.isAuthenticated, UserController.getUs
 
 router.get('/get-all-users', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.getAllUsers);
 
-router.post('/update-user-details', UserController.userUpdateDetails);
+router.post('/update-user-details', AuthManager.isAuthenticated, AuthManager.isAdmin,  UserController.userUpdateDetails);
 
 
 router.post('/update-notification', AuthManager.isAuthenticated, UserController.readNotification);
@@ -24,6 +24,13 @@ router.get('/get-user', UserController.getUsers);
 
 
 // ********************User API*******************************
+
+router.post('/activateUser', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.activateAccount);
+router.post('/deactivateUser', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.deActivateAccount);
+
+router.post('/get-user-by-id', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.getUserById);
+
+router.get('/query-users', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.getUserByQuery);
 
 router.post('/create-new-user', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.createNewUser);
 

@@ -8,6 +8,8 @@ const AuthManager = require('../auth/auth.service')
 
 router.post('/create-new-user', AuthManager.isAuthenticated, AuthManager.isAdmin, AdminController.createNewUser);
 
+router.get('/get-dashboard-data',AdminController.getDashboardData);
+
 router.get('/get-proflie', AuthManager.isAuthenticated, AuthManager.isAdmin, AdminController.getAdminProfile);
 
 router.post('/udpate-user-proflie', AuthManager.isAuthenticated, AuthManager.isAdmin, AdminController.updateUserProfile);

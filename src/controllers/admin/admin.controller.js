@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const UserModal = require('../../models/User').UserModel;
 const catchAsync = require('../../utils/catchAsync');
-const { ROLES } = require('../../models');
+const { ROLES, FaqsModel, ContactUsModel } = require('../../models');
 const Mailer = require('../../services/mail.service');
 
 
@@ -65,6 +65,23 @@ class AdminController {
 
 
         return res.send({ message: "User account has been Created succssfully", status: 201, success: true })
+    });
+
+    static getDashboardData = catchAsync(async (req, res, next) => {
+        // if (!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password) {
+        //     return res.send({ message: "All feilds are required", success: false, status: 400 })
+        // }
+        const totalusers = await UserModal.find({role:ROLES.USER});
+        const activeusers = await UserModal.find({role:ROLES.USER,isActive:true});
+        const deactiveusers = await UserModal.find({role:ROLES.USER,isActive:false});
+        const faq = await FaqsModel.count();
+        const contarctUs = await ContactUsModel.count();
+        return res.send({
+            success: false,
+            status: 200,
+            data: {totalUsers:totalusers.length,deActiveUsers:deactiveusers.length,activeUsers:activeusers.length,totalFAQs:faq,totalContactUs:contarctUs}
+        });
+
     });
 
     static async getAdminProfile(req, res) {
