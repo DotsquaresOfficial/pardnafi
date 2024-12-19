@@ -77,7 +77,7 @@ class AdminController {
         const faq = await FaqsModel.count();
         const contarctUs = await ContactUsModel.count();
         return res.send({
-            success: false,
+            success: true,
             status: 200,
             data: {totalUsers:totalusers.length,deActiveUsers:deactiveusers.length,activeUsers:activeusers.length,totalFAQs:faq,totalContactUs:contarctUs}
         });
