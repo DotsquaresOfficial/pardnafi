@@ -28,7 +28,7 @@ router.get('/get-user', UserController.getUsers);
 router.post('/activateUser', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.activateAccount);
 router.post('/deactivateUser', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.deActivateAccount);
 
-router.post('/get-user-by-id', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.getUserById);
+router.get('/get-user-by-id', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.getUserById);
 
 router.get('/query-users', AuthManager.isAuthenticated, AuthManager.isAdmin, UserController.getUserByQuery);
 

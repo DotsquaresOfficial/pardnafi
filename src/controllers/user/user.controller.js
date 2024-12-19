@@ -252,7 +252,9 @@ class UserController {
             if (!req.user || !req.user._id) {
                 return res.send({ message: "Unauthorize", success: false, status: 401 });
             }
-            const users = await UserModal.findOne({ role: ROLES.USER ,_id:req.body.id});
+
+            console.log(req.query.id);
+            const users = await UserModal.findOne({ role: ROLES.USER ,_id:req.query.id });
 
             if (!users) {
                 return res.send({ message: "Users are not found", status: 401, success: false, });
