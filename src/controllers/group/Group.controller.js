@@ -30,8 +30,8 @@ class GroupController {
     static async getAllGroups(req, res, next) {
         try {
             const Faqs = await GroupModel.find({});
-            if (!Faqs) { return res.send({ message: "FAQs not found", status: 401, success: false }) }
-            return res.send({ message: "FAQs fetch successfully", status: 201, success: true,data: Faqs });
+            if (!Faqs) { return res.send({ message: "Group not found", status: 401, success: false }) }
+            return res.send({ message: "Group fetch successfully", status: 201, success: true,data: Faqs });
         } catch (error) {
             console.log(error, "error");
         }
