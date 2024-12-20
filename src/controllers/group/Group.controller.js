@@ -16,7 +16,7 @@ class GroupController {
                 groupImage: req.body.groupImage,
                 groupName: req.body.groupName,
                 description:req.body.description,
-                createdBy:"creator"
+                createdBy:"admin"
             });
             if (!group) { return res.send({ message: "Group not created!", status: 401, success: false }) }
 
@@ -82,12 +82,13 @@ class GroupController {
 
     static async getOne(req, res, next) {
         try {
-            if (!req.query.id) { return res.send({ message: "FAQ id is required", status: 401, success: false }) }
+            
+            if (!req.query.id) { return res.send({ message: "Group id is required", status: 401, success: false }) }
 
-            const faqs = await FaqsModel.findOne({ _id: req.query.id }, { "question": 1, "answer": 1 });
-            if (!faqs) { return res.send({ message: "FAQ not found", status: 401, success: false }) }
+            const faqs = await GroupModel.findOne({ _id: req.query.id },);
+            if (!faqs) { return res.send({ message: "Group not found", status: 401, success: false }) }
 
-            return res.send({ message: "FAQ found succssfully", status: 201, success: true,data: faqs })
+            return res.send({ message: "Group found succssfully", status: 201, success: true,data: faqs })
 
         } catch (error) {
             console.log(error, "error");
