@@ -82,7 +82,7 @@ class GroupController {
 
     static async getOne(req, res, next) {
         try {
-            
+
             if (!req.query.id) { return res.send({ message: "Group id is required", status: 401, success: false }) }
 
             const faqs = await GroupModel.findOne({ _id: req.query.id },);
@@ -99,7 +99,7 @@ class GroupController {
     }
 
 
-    static async getFaqsByQuery(req, res, next) {
+    static async getGroupByQuery(req, res, next) {
         try {
             // Check if the 'query' parameter is provided in the request
             if (!req.query.query) {
@@ -113,17 +113,18 @@ class GroupController {
             const searchQuery = req.query.query;
     
             // Perform case-insensitive search using $regex
-            const faqs = await FaqsModel.find({
+            const faqs = await GroupModel.find({
                 $or: [
-                    { question: { $regex: searchQuery, $options: "i" } },
-                    { answer: { $regex: searchQuery, $options: "i" } },
+                    { groupName: { $regex: searchQuery, $options: "i" } },
+                    { description: { $regex: searchQuery, $options: "i" } },
+                    { createdBy: { $regex: searchQuery, $options: "i" } },
                 ]
             });
     
             // Check if any FAQs are found
             if (!faqs || faqs.length === 0) {
                 return res.status(404).send({ 
-                    message: "No FAQs found matching the query", 
+                    message: "No Group found matching the query", 
                     status: 404, 
                     success: false 
                 });
@@ -131,7 +132,7 @@ class GroupController {
     
             // Return the found FAQs
             return res.status(200).send({ 
-                message: "FAQs found successfully", 
+                message: "Group found successfully", 
                 status: 200, 
                 success: true, 
                 data: faqs 

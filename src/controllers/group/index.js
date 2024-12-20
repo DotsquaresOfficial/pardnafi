@@ -9,10 +9,7 @@ const pageValidation = require('../../validations/page.validation');
 router.post('/create-group', AuthManager.isAuthenticated, AuthManager.isAdmin,  groupController.createGroup);
 router.get('/get-all-groups', AuthManager.isAuthenticated, AuthManager.isAdmin, groupController.getAllGroups);
 router.get('/get-group-by-id', AuthManager.isAuthenticated, AuthManager.isAdmin, groupController.getOne);
-
-
-
-
+router.get('/query-group', AuthManager.isAuthenticated, AuthManager.isAdmin, groupController.getGroupByQuery);
 
 module.exports = router;
 
