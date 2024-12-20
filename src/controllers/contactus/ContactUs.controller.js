@@ -71,7 +71,7 @@ class ContactUsController {
                 message: "Query was found successfully", 
                 status: 200, 
                 success: true, 
-                data: users 
+                tickets: users 
             });
     
         } catch (error) {
