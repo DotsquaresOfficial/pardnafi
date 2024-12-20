@@ -9,7 +9,7 @@ const userRoutes = require('../../controllers/user');
 const adminRoutes = require('../../controllers/admin');
 const nftRoutes = require('../../controllers/nft');
 const governmentRoutes = require('../../controllers/goverment')
-
+const groupRoutes = require('../../controllers/group')
 const router = express.Router();
 
 const defaultRoutes = [
@@ -36,6 +36,10 @@ const defaultRoutes = [
   {
     path: '/page',
     route: contentRoutes,
+  },
+  {
+    path: '/group',
+    route: groupRoutes,
   },
   {
     path: '/user',

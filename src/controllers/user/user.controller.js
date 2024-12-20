@@ -283,9 +283,9 @@ class UserController {
 
             await userDetails.save();
             if (!userDetails) {
-                return res.send({ message: "Profile details has not been updated", status: 401, success: false });
+                return res.send({ message: "User details has not been updated", status: 401, success: false });
             }
-            return res.status(200).json({ message: "Profile details has been updated successfully", status: 201, success: true });
+            return res.status(200).json({ message: "User details has been updated successfully", status: 201, success: true });
         } catch (error) {
             console.log(error, "error   ");
         }
