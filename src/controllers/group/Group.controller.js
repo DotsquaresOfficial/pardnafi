@@ -37,19 +37,19 @@ class GroupController {
         }
     }
 
-    static async updatefaqs(req, res, next) {
+    static async updateGroup(req, res, next) {
         try {
             if (!req.body.id) { return res.send({ message: "id is not found", status: 401, success: false }) }
 
-            const update = await FaqsModel.findOne({ _id: req.body.id });
+            const update = await GroupModel.findOne({ _id: req.body.id });
 
-            if (!update) { return res.send({ message: "FAQ details not found" }) }
+            if (!update) { return res.send({ message: "Group details not found" }) }
+            update.groupImage = req.body.groupImage ? req.body.groupImage : update.groupImage; 
+            update.groupName = req.body.groupName ? req.body.groupName : update.groupName;
+            update.description = req.body.description ? req.body.description : update.description;
+            await update.save();
 
-            update.question = req.body.question ? req.body.question : update.question;
-            update.answer = req.body.answer ? req.body.answer : update.answer;
-            await update.save()
-
-            return res.send({ message: "FAQ updated successfully", status: 200, success: true, update });
+            return res.send({ message: "Group updated successfully", status: 200, success: true });
         } catch (error) {
             console.log(error, "error");
         }
