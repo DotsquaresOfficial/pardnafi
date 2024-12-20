@@ -6,15 +6,11 @@ const FaqsModel = require('../../models/Faqs').FaqsModel;
 
 class GroupController {
 
-    // "groupImage":"www.google.com",
-    // "groupName":"New Group",
-    // "description": "Group Description"
-
     static async createGroup(req, res, next) {
         try {
-            if (!req.body.groupImage || !req.body.groupName || !req.body.description) {
-                return res.send({ message: "All perameter are required", status: 401, success: false })
-            }
+            // if (!req.body.groupImage || !req.body.groupName || !req.body.description) {
+            //     return res.send({ message: "All perameter are required", status: 401, success: false })
+            // }
 
             const group = await GroupModel.create({
                 groupImage: req.body.groupImage,
