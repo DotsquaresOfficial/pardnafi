@@ -29,6 +29,9 @@ class AuthManager {
             if (user.blocked === true) {
                 return ResponseManager.respondWithError({ data: { res }, status: 400, message: "Your account is blocked." });
             }
+            if(req.body.role==='user' && user.role!=='user'){
+                return res.status(401).json({ message: "Please sign in with user`s account.", status: 401, success: false })
+            }
             const token = _this.signToken({ _id: user._id, email: user.email, role: user.role });
             return res.json({
                 message: "Successfully Loggedin",

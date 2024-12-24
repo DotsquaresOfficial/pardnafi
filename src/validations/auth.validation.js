@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const { password } = require('./custom.validation');
+const { ROLES } = require('../models');
 
 const register = {
   body: Joi.object().keys({
@@ -7,6 +8,7 @@ const register = {
     password: Joi.string().required().custom(password),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
+    role: Joi.string().valid(ROLES.USER, ROLES.ADMIN).default(ROLES.ADMIN),
   }),
 };
 
@@ -14,6 +16,7 @@ const login = {
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
+    role: Joi.string().valid(ROLES.USER, ROLES.ADMIN).default(ROLES.ADMIN),
   }),
 };
 

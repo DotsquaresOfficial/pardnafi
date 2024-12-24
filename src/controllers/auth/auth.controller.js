@@ -34,8 +34,7 @@ class AuthController {
       lastName: reqbody.lastName,
       email: reqbody.email,
       password: reqbody.password,
-      role: ROLES.ADMIN
-
+      role: req.body.role===ROLES.USER? ROLES.USER:ROLES.ADMIN
     });
     return res.send({ message: "Account Created succssfully", status: 201, success: true })
   });
