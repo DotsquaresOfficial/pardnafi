@@ -19,12 +19,14 @@ class AuthManager {
     login(req, res, next) {
           _this._passport.authenticate('local-auth', function (err, user, info) {
             const error = err || info;
+           
+            if (!user) {
+                return res.status(401).json({ message: "invalid credentials", status: 401, success: false })
+            }
+            
             if (error) {
                 console.log(error, "error");
                 return res.status(401).json({success:false,status:401, message: "invalid credentials" })
-            }
-            if (!user) {
-                return res.status(401).json({ message: "invalid credentials", status: 401, success: false })
             }
             if (user.blocked === true) {
                 return ResponseManager.respondWithError({ data: { res }, status: 400, message: "Your account is blocked." });
