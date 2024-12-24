@@ -9,4 +9,10 @@ const FaqsSchema = new Schema({
 }, { timestamps: true },);
 
 
+FaqsSchema.pre('find', function () {
+    this.sort({ createdAt: -1 });  
+});
+
+
+
 module.exports.FaqsModel = mongoose.model('Faqs', FaqsSchema);

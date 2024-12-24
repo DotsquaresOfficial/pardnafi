@@ -15,4 +15,9 @@ const GroupSchema = new Schema({
     isDeleted: { type: Boolean, default: false }, // Soft delete flag
 }, { timestamps: true });
 
+
+GroupSchema.pre('find', function () {
+    this.sort({ createdAt: -1 });  
+});
+
 module.exports.GroupModel = mongoose.model('Group', GroupSchema);

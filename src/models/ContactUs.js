@@ -15,4 +15,9 @@ const ContactUsSchema = new Schema({
 }, { timestamps: true },);
 
 
+ContactUsSchema.pre('find', function () {
+    this.sort({ createdAt: -1 });  
+});
+
+
 module.exports.ContactUsModel = mongoose.model('ContactUs', ContactUsSchema);

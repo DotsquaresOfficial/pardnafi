@@ -62,6 +62,11 @@ UserSchema.methods.checkPassword = function (password) {
     return this.encryptPassword(password, this.salt) === this.hashedPassword;
 };
 
+
+UserSchema.pre('find', function () {
+    this.sort({ createdAt: -1 });  
+});
+
 UserSchema.pre('save', function (next) {
     if (this.isNew) {
         //do stuff
